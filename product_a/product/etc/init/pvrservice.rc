@@ -1,0 +1,15 @@
+service pvrservice /product/bin/pvrservice
+    class core
+    user system
+    group usb system wakelock
+    capabilities SYS_NICE SYS_ADMIN DAC_OVERRIDE SYS_RESOURCE SYS_TIME SYS_TTY_CONFIG
+    disabled
+
+#on property:ro.product.lge.vr_hybrid_hmd=true
+#    enable pvrservice
+on property:ro.product.lge.vr_hybrid_hmd=true && property:sys.pvr.vrservice.state=0
+    stop pvrservice
+on property:ro.product.lge.vr_hybrid_hmd=true && property:sys.pvr.vrservice.state=1
+    start pvrservice
+on property:ro.product.lge.vr_hybrid_hmd=true && property:sys.pvr.vrservice.state=2
+    restart pvrservice
